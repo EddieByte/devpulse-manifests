@@ -1,0 +1,34 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+namePrefix: prod-
+
+patchesStrategicMerge:
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: devpulse-deployment
+    spec:
+      replicas: 3
+    
+  - |-
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: devpulse-ingress
+    spec:
+      rules:
+        - host: devpulse.example.com
+          http:
+            paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: devpulse-service
+                    port:
+                      number: 80
