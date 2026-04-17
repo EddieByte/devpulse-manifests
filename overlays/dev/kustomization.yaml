@@ -17,4 +17,4 @@ patchesStrategicMerge:
 images:
 - name: eddiebyte/devpulse
   newName: eddiebyte/devpulse
-  newTag: 1.0.0-1
+  newTag: 1.0.0-2
