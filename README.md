@@ -24,13 +24,24 @@ kubectl kustomize overlays/dev
 kubectl kustomize overlays/prod
 ```
 
-### 2. Connect to ArgoCD
-To enable the "deployment map" and automated syncing, apply the ArgoCD application manifest:
+## Accessing the Application
 
+After deploying, you can access your application via the AWS Application Load Balancer created by the Ingress Controller.
+
+### 1. Find the URL
+Run the following command in your terminal:
 ```bash
-# Bootstrapping the Dev environment in ArgoCD
-kubectl apply -f argocd/application-dev.yaml
+kubectl get ingress -n devpulse-dev
 ```
+Look for the **ADDRESS** column. Copy that DNS name (e.g., `k8s-devpulse-dev-devpulse-123456.us-east-1.elb.amazonaws.com`).
+
+### 2. Wait for Provisioning
+AWS can take **2-5 minutes** to fully provision the Load Balancer and for the DNS to propagate. If you see a "404" or timeout initially, wait a few minutes and try again.
+
+### 3. Open in Browser
+Paste the DNS name from step 1 into your browser's address bar.
+
+---
 
 ## GitOps Workflow
 
